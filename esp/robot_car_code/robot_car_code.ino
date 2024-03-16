@@ -26,7 +26,9 @@ void setup() {
  pinMode(IN_1, OUTPUT);
  pinMode(IN_2, OUTPUT);
  pinMode(IN_3, OUTPUT);
- pinMode(IN_4, OUTPUT); 
+ pinMode(IN_4, OUTPUT);
+ pinMode(LED_BUILTIN, OUTPUT); 
+ digitalWrite(LED_BUILTIN,HIGH);
   
   Serial.begin(115200);
   
@@ -137,36 +139,84 @@ void stopRobot(){
 
       digitalWrite(IN_1, LOW);
       digitalWrite(IN_2, LOW);
-      analogWrite(ENA, speedCar);
+      analogWrite(ENA, 0);
 
       digitalWrite(IN_3, LOW);
       digitalWrite(IN_4, LOW);
-      analogWrite(ENB, speedCar);
+      analogWrite(ENB, 0);
  }
 
 void loop() {
     server.handleClient();//来自客户端的请求，使设备可以进行通信
     
       command = server.arg("State");
-      if (command == "W") goAhead();
-      else if (command == "X") goBack();
-      else if (command == "A") goLeft();
-      else if (command == "D") goRight();
-      else if (command == "E") goAheadRight();
-      else if (command == "Q") goAheadLeft();
-      else if (command == "C") goBackRight();
-      else if (command == "Z") goBackLeft();
-      else if (command == "0") speedCar = 400;
-      else if (command == "1") speedCar = 470;
-      else if (command == "2") speedCar = 540;
-      else if (command == "3") speedCar = 610;
-      else if (command == "4") speedCar = 680;
-      else if (command == "5") speedCar = 750;
-      else if (command == "6") speedCar = 820;
-      else if (command == "7") speedCar = 890;
-      else if (command == "8") speedCar = 960;
-      else if (command == "9") speedCar = 1023;
-      else if (command == "S") stopRobot();
+  if (command == "W") {
+    goAhead();
+    server.send(200, "text/plain", "Moving forward");
+    flashLED();
+  } else if (command == "S") {
+    goBack();
+    flashLED();
+  } else if (command == "A") {
+    goLeft();
+    flashLED();
+  } else if (command == "D") {
+    goRight();
+    flashLED();
+  } else if (command == "E") {
+    goAheadRight();
+    flashLED();
+  } else if (command == "Q") {
+    goAheadLeft();
+    flashLED();
+  } else if (command == "C") {
+    goBackRight();
+    flashLED();
+  } else if (command == "Z") {
+    goBackLeft();
+    flashLED();
+  } else if (command == "0") {
+    speedCar = 400;
+    flashLED();
+  } else if (command == "1") {
+    speedCar = 470;
+    flashLED();
+  } else if (command == "2") {
+    speedCar = 540;
+    flashLED();
+  } else if (command == "3") {
+    speedCar = 610;
+    flashLED();
+  } else if (command == "4") {
+    speedCar = 680;
+    flashLED();
+  } else if (command == "5") {
+    speedCar = 750;
+    flashLED();
+  } else if (command == "6") {
+    speedCar = 820;
+    flashLED();
+  } else if (command == "7") {
+    speedCar = 890;
+    flashLED();
+  } else if (command == "8") {
+    speedCar = 960;
+    flashLED();
+  } else if (command == "9") {
+    speedCar = 1023;
+    flashLED();
+  } else if (command == "G") {
+    server.send(200, "text/plain", "CLOSED");
+    digitalWrite(LED_BUILTIN, LOW);
+    stopRobot();    
+  }
+  else{}
+}
+
+void flashLED(){
+  digitalWrite(LED_BUILTIN,LOW);
+  delay(100);
+  digitalWrite(LED_BUILTIN,HIGH);
 }
 
 void HTTP_handleRoot(void) {
@@ -175,5 +225,5 @@ if( server.hasArg("State") ){
        Serial.println(server.arg("State"));
   }
   server.send ( 200, "text/html", "" );
-  delay(1);
+  delay(1000);
 }
