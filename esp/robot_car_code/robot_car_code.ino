@@ -148,14 +148,14 @@ void loop() {
     server.handleClient();//来自客户端的请求，使设备可以进行通信
     
       command = server.arg("State");
-      if (command == "F") goAhead();
-      else if (command == "B") goBack();
-      else if (command == "L") goLeft();
-      else if (command == "R") goRight();
-      else if (command == "I") goAheadRight();
-      else if (command == "G") goAheadLeft();
-      else if (command == "J") goBackRight();
-      else if (command == "H") goBackLeft();
+      if (command == "W") goAhead();
+      else if (command == "X") goBack();
+      else if (command == "A") goLeft();
+      else if (command == "D") goRight();
+      else if (command == "E") goAheadRight();
+      else if (command == "Q") goAheadLeft();
+      else if (command == "C") goBackRight();
+      else if (command == "Z") goBackLeft();
       else if (command == "0") speedCar = 400;
       else if (command == "1") speedCar = 470;
       else if (command == "2") speedCar = 540;

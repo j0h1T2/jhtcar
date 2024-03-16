@@ -13,13 +13,14 @@ def control_robot(command):
 
 # 主循环，接受键盘输入并发送相应的命令给ESP8266
 while True:
-    print("Enter command (F: Forward, B: Backward, L: Left, R: Right, Q: Quit):")
+    print("Enter command (W: Forward, X: Backward, A: Left, D: Right, Q: Quit):")
     command = input().upper()
 
     if command == 'Q':
         break
 
-    if command in ['F', 'B', 'L', 'R', 'I', 'G', 'J', 'H', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'S']:
+    if command in ['W', 'Q', 'A', 'Z', 'X', 'C', 'D', 'E', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'S']:
         control_robot(command)
+        print('Some changes happened')
     else:
-        print("Invalid command. Please enter F, B, L, R, I, G, J, H, 0-9, or S.")
+        print("Invalid command. Please enter W,Q,A,Z,X,C,D,E,S,0-9.")
